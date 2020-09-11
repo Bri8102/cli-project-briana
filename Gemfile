@@ -1,5 +1,7 @@
 source "https:rubygems.org"
 
-gem 'require_all'
 gem 'nokogir'
 gem 'open-uri'
+gem 'colorize'
+gem 'readline'
+gem 'pry'
