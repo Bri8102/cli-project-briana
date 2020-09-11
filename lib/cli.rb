@@ -48,37 +48,37 @@ module GamerGrid
 
           puts game_arr.map.with_index {|g, index|
           "\t#{index+1}. #{g.name}"}
-          # puts "--------------------------------------------".black.on_white
-          # select_game(game_arr)
+          puts "--------------------------------------------".black.on_white
+          select_game(game_arr)
       end
 
-      # def select_game(game_arr)
-      #     user_input = nil
+      def select_game(game_arr)
+          user_input = nil
 
-      #     while true
-      #         user_input = Readline.readline("Select Game:", true).strip
+          while true
+              user_input = Readline.readline("Select Game:", true).strip
 
-      #         goodbye if user_input.downcase === "exit"
+              goodbye if user_input.downcase === "exit"
 
-      #         game_choice = user_input.to_i
+              game_choice = user_input.to_i
 
              
-      #         if game_choice > 0 && game_choice < 31
-      #             # binding.pry
-      #             puts "--------------------------------------------".black.on_white
-      #             game_choice = game_arr[game_choice-1].name.upcase
-      #             puts "Here is the deal info for #{game_choice}".blue.bold
-      #             game_info(game_choice)
-      #         else
-      #             puts "That selection is not valid. Please select a Game from 1 - 30, or type exit."
-      #         end
-      #     end
-      # end 
+              if game_choice > 0 && game_choice < 31
+                  # binding.pry
+                  puts "--------------------------------------------".black.on_white
+                  game_choice = game_arr[game_choice-1].name.upcase
+                  puts "Here is the deal info for #{game_choice}".blue.bold
+                  game_info(game_choice)
+              else
+                  puts "That selection is not valid. Please select a Game from 1 - 30, or type exit."
+              end
+          end
+      end 
 
-      # def game_info(game_choice)
-      #    game = UltraGamer::Game_Info.new(game_choice)
-      #    puts info.game_deets
-      # end
+      def game_info(game_choice)
+         game = UltraGamer::Game_Info.new(game_choice)
+         puts info.game_deets
+      end
          
      
       def goodbye
