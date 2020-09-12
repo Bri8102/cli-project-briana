@@ -12,4 +12,4 @@ require_relative '../lib/cli.rb'
 require_relative '../lib/game_info.rb'
 
 # puts GamerGrid::CLI.new.start 
-#  ruby bin/ultra_gamer.rb 
+# ruby bin/ultra_gamer.rb 
