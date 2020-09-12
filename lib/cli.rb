@@ -39,7 +39,7 @@ module GamerGrid
 
         def list_games(deal_name)
             # binding.pry
-            puts "Please select a game from 1 - 30".blue.bold
+            # puts "Please select a game from 1 - 30".blue.bold
             game_arr = UltraGamer::Game_deals.list_games(deal_name)
  
             puts game_arr.map.with_index {|g, index|
