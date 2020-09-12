@@ -1,1 +1,2 @@
-require_relative './bin/environment'
+require "bundler/gem_tasks"
+task :default => :spec
