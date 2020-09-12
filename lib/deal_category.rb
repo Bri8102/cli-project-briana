@@ -14,7 +14,6 @@ module UltraGamer
   
              doc = Nokogiri::HTML(open('https://store.playstation.com/en-us/grid/STORE-MSF77008-WEEKLYDEALS/1?smcid=pdc%3Aen-us%3Aprimary%2520nav%3Amsg-games%3Abuy-games'))
   
-           #   deals = doc.search('div.grid-cell__title.grid-cell__title--full').css('span').text
              deals = doc.search('div.grid-cell__body')
              deals.each_with_index{|deal, index|
                if index < 5 then
