@@ -1,97 +1,80 @@
-module GamerGrid
+module UltraGamer
     class CLI  
-        
+
         def start 
-            list_deals
+            welcome
+            UltraGamer::Scraper.scrape_categories
+            puts "\nPlease enter a number associated with the deal you would like to view."
+            list_categories  
+            category_input      
         end
         
-        def list_deals
-            puts "Hello! Welcome to GAMER GRID".blue.bold
-            puts "Which Game Deal would you like to explore? \nPlease select a deal from 1-5".blue
-            deal_arr = UltraGamer::Deal_Categories.list_deal_category
-            puts deal_arr.map.with_index {|deal,index| 
-              "\t#{index+1}. #{deal.name}"}
-            puts "--------------------------------------------".black.on_white
-            select_deal(deal_arr)
+        def welcome
+            puts "_________________________________________________________".blue
+            puts " "
+            puts "--------------Hello! Welcome to GAMER GRID---------------".blue.bold
+            puts "------- Explore Game Deals by selecting from 1-5 --------".blue
+            puts "_________________________________________________________".blue
         end
 
-        def select_deal(deal_arr)
-            input = nil
-
-            while true
-                input = Readline.readline("Select Deal or type exit:", true).strip
-
-                goodbye if input.downcase === "exit"
-                input = input.to_i
-
-               
-                if input > 0 && input < 6
-                    puts "--------------------------------------------".black.on_white
-                    deal_name = deal_arr[input-1].name.strip
-                    puts "Here are the games on sale for #{deal_name.upcase}\n".blue.bold
-                    list_games(deal_name)
-                else
-                    puts "That selection is not valid. Please select a Game Deal from 1 - 5, or type exit."
-                end
+        def category_input
+            print "\nPick a number to see all the games: "
+            input = gets.chomp.to_i
+            game = UltraGamer::Categories.all[input-1]
+            case input
+            when 1..UltraGamer::Categories.all.length
+                puts "\nNow, which game would you like to see?"
+                UltraGamer::Games.reset
+                list_games(game)
+                # game_input 
+                puts "--------------------"
+                options
+                puts "--------------------"
+            else
+                puts "Ooops, What was that?"
+                category_input
             end
-
         end
 
-        def list_games(deal_name)
-            # binding.pry
-            # puts "Please select a game from 1 - 30".blue.bold
-            game_arr = UltraGamer::Game_deals.list_games(deal_name)
- 
-            puts game_arr.map.with_index {|g, index|
-            "\t#{index+1}. #{g.name}: #{g.price} | #{g.console} | #{g.type} \n"}
-            # "\t#{index+1}. #{g.name}"}
-            puts "--------------------------------------------".black.on_white
-            # select_game(game_arr)
+        def list_categories
+            UltraGamer::Categories.all.each.with_index(1).each do |deal, i|
+                puts "#{i}. #{deal.name}".blue
+            end
         end
 
-        # def select_game(game_arr)
-        #     user_input = nil
+        def list_games(games)
+            UltraGamer::Scraper.scrape_games(games)
+            UltraGamer::Games.all.each.with_index(1).each do |game, i|
+                puts "#{i}. #{game.game_name} | #{game.price} | #{game.console} | #{game.type} ".blue
+           end
+        end
 
-        #     while true
-        #         user_input = Readline.readline("Select Game:", true).strip
+        def options
+           puts "\nWant to view a different category? Type \"C\"".blue
+           puts "Want to exit the program? Type \"E\"".blue
+           print "Type here: "
+           input = gets.chomp.downcase
+           case input
+           when "c"
+               puts "\nWhich month would you like to see instead?"
+               list_categories
+               category_input
+           when "e"
+               goodbye
+               exit
+           else
+               puts "\nThere must have been a typo, try again!"
+               options
+           end
+        end
 
-        #         goodbye if user_input.downcase === "exit"
 
-        #         game_choice = user_input.to_i
-
-               
-        #         if game_choice > 0 && game_choice < 31
-        #             # binding.pry
-        #             puts "--------------------------------------------".black.on_white
-        #             game_choice = game_arr[game_choice-1].name.upcase
-        #             puts "Here is the deal info for #{game_choice}".blue.bold
-        #             game_details(game_choice)
-        #         else
-        #             puts "That selection is not valid. Please select a Game from 1 - 30, or type exit."
-        #         end
-        #     end
-        # end 
-
-        # def game_details(game_choice)
-        #     # binding.pry
-        #     game_choice = UltraGamer::Game_deals.list_games(game_choice)
- 
-        #     puts game_choice.map.with_index {|a, i|
-        #     # "\t#{index+1}. #{g.name}: #{g.price} | #{g.console} | #{g.type} \n"}
-        #     "\t#{i+1}. #{a.price} | #{a.console} | #{a.type} | #{a.url} \n"}
-        #     puts "--------------------------------------------".black.on_white
-        #     # select_game(game_arr)
-        # end
-           
-       
         def goodbye
             puts "\nSee ya later Gamer! Come again soon".red.on_white.bold
             exit
         end
-
-    end
+    
         
-
+    end
 end
 
-puts GamerGrid::CLI.new.start 
