@@ -1,6 +1,6 @@
 module UltraGamer
     class CLI  
-
+        
         def start 
             welcome
             UltraGamer::Scraper.scrape_categories
@@ -23,10 +23,9 @@ module UltraGamer
             game = UltraGamer::Categories.all[input-1]
             case input
             when 1..UltraGamer::Categories.all.length
-                puts "\nNow, which game would you like to see?"
+                puts "\nHere all all the games:"
                 UltraGamer::Games.reset
                 list_games(game)
-                # game_input 
                 puts "--------------------"
                 options
                 puts "--------------------"
@@ -35,6 +34,7 @@ module UltraGamer
                 category_input
             end
         end
+
 
         def list_categories
             UltraGamer::Categories.all.each.with_index(1).each do |deal, i|
@@ -56,7 +56,7 @@ module UltraGamer
            input = gets.chomp.downcase
            case input
            when "c"
-               puts "\nWhich month would you like to see instead?"
+               puts "\nWhich game would you like to see instead?"
                list_categories
                category_input
            when "e"
@@ -73,8 +73,7 @@ module UltraGamer
             puts "\nSee ya later Gamer! Come again soon".red.on_white.bold
             exit
         end
-    
-        
-    end
-end
 
+    end
+        
+end
