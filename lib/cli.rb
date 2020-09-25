@@ -23,7 +23,7 @@ module UltraGamer
             game = UltraGamer::Categories.all[input-1]
             case input
             when 1..UltraGamer::Categories.all.length
-                puts "\nHere all all the games:"
+                puts "\nHere are all the games:"
                 UltraGamer::Games.reset
                 list_games(game)
                 puts "--------------------"
